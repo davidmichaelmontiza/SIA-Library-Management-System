@@ -12,13 +12,8 @@ import { corsHandler } from "./middleware/corsHandler";
 import { loggingHandler } from "./middleware/loggingHandler";
 import { routeNotFound } from "./middleware/routeNotFound";
 import { specs } from "./config/swagger";
-import bookRoutes from "./routes/bookRoutes";
-import categoryRoutes from "./routes/categoryRoutes";
-import fineRoutes from "./routes/fineRoutes";
-import shelfRoutes from "./routes/shelfRoutes";
-import transactionRoutes from "./routes/transactionRoutes";
-import authRoutes from "./routes/authRoutes";
-import librarianRoutes from "./routes/librarianRoutes";
+import { bookRoutes, categoryRoutes, fineRoutes, librarianRoutes, shelfRoutes, transactionRoutes } from "./routes/baseRoutes";
+
 
 export const application = express();
 export let httpServer: ReturnType<typeof http.createServer>;
@@ -71,13 +66,12 @@ export const Main = async () => {
   logging.log("----------------------------------------");
   logging.log("Define Controller Routing");
   logging.log("----------------------------------------");
-  application.use(authRoutes);
-  application.use(bookRoutes);
-  application.use(categoryRoutes);
-  application.use(fineRoutes);
-  application.use(librarianRoutes);
-  application.use(shelfRoutes);
-  application.use(transactionRoutes);
+  application.use("/books", bookRoutes);
+  application.use("/categories", categoryRoutes);
+  application.use("/fines", fineRoutes);
+  application.use("/librarians", librarianRoutes);
+  application.use("/shelves", shelfRoutes);
+  application.use("/transactions", transactionRoutes);
   
   logging.log("----------------------------------------");
   logging.log("Define Routing Error");
